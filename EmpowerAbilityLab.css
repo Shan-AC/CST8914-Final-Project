@@ -1,0 +1,200 @@
+/* =========================================
+   1. GLOBAL ACCESSIBILITY & BASE STYLES
+   ========================================= */
+
+/* CHANGE STARTING HERE: */
+html, body {
+    height: 100%; /* Line 1: Tells the browser the page is 100% of the window */
+    margin: 0;    /* Line 2: Removes default browser gaps */
+}
+
+body {
+    display: flex;         /* Line 3: Turns the page into a flexbox */
+    flex-direction: column; /* Line 4: Stacks header, main, and footer vertically */
+    min-height: 100vh;      /* Line 5: Ensures the body is at least as tall as the screen */
+    
+    /* Keep your existing body styles below */
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.6;
+    color: #212529;
+    
+}
+
+/* Add this to your main tag style as well */
+main {
+    flex: 1 0 auto; /* This line "pushes" the footer to the very bottom */
+}
+/* =========================================
+   2. HEADER & NAVIGATION
+   ========================================= */
+
+/* This targets the 'Home' link when it is selected */
+.nav-link[aria-current="page"] {
+    color: #ffc107 !important;        /* The gold/yellow color */
+    font-weight: bold;                /* Makes the text thicker */
+    border-bottom: 3px solid #ffc107; /* The yellow underline */
+    padding-bottom: 5px;              /* Space between the text and the line */
+}
+/* =========================================
+   2. HOME PAGE - JUMTRON STYLING
+   ========================================= */
+
+.jumbotron {
+    /* This centers the text and the content inside the box */
+    text-align: center;
+    
+    /* These lines center the 'box' itself if it has a width */
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+
+    /* Keep it flush with the navbar */
+    margin-top: 0 !important;
+    padding: 4rem 2rem;
+    background-color: #f8f9fa;
+}
+.jumbotron h1 {
+    margin-bottom: 2.5rem !important; 
+}
+.jumbotron p {
+    /* This limits the width so the lines aren't too long to read */
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1.5rem;
+}
+.jumbotron .btn {
+    margin-top: 2rem !important;
+}
+
+/* =========================================
+   3. TABLET & DESKTOP SIZE (3 Columns, 2 Rows)
+   ========================================= */
+@media (min-width: 576px) {
+    .table {
+        display: table !important;
+        width: 100%;
+        border-collapse: collapse;
+        border: 1px solid #dee2e6;
+        table-layout: fixed; /* Ensures 3 equal columns */
+    }
+
+    /* First Row (Header) Styling */
+    .table thead th {
+        background-color: #343a40 !important; /* Specific dark gray requested */
+        color: #ffffff !important;           /* Pure white text */
+        text-align: center;
+        padding: 15px;
+        font-weight: normal;
+        border: 1px solid #454d55 !important; /* Slightly lighter border for header cells */
+        font-size: 1.1rem;
+    }
+
+    /* All Body Cells (Rows below the header) */
+    .table td {
+        background-color: #ffffff !important; /* Clean white background */
+        padding: 1.5rem !important;
+        border: 1px solid #dee2e6 !important;
+        vertical-align: top;
+        color: #212529;
+    }
+
+    /* Bold the first column text for better visual structure */
+    .table tbody td:first-child {
+        font-weight: normal;
+    }
+
+    /* Center the 'Learn more' links row */
+    .table tbody tr:last-child td {
+        text-align: center;
+        padding: 1rem !important;
+    }
+}
+
+/* --- MOBILE SIZE (Stay Stacked) --- */
+@media (max-width: 575.98px) {
+    .table, .table tbody, .table tr, .table td {
+        display: block !important;
+        width: 100% !important;
+        border: 1px solid #dee2e6 !important;
+        margin-bottom: 5px;
+    }
+}
+/* =========================================
+   4. INTERACTIVE COMPONENTS (REQUIREMENT 4)
+   ========================================= */
+
+/* Section Toggling Logic */
+section[hidden] {
+    display: none !important;
+}
+
+/* Custom Modal/Lightbox Design (No Bootstrap JS used) */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85); /* Darken background for focus */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+}
+
+.modal[hidden] {
+    display: none !important;
+}
+
+.modal-content {
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+}
+
+/* Switch Component Styling */
+#email-updates-switch {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 0;
+}
+
+#email-updates-switch:hover {
+    opacity: 0.7;
+}
+
+/* =========================================
+   5. WEB FORM & VALIDATION (REQUIREMENT 5)
+   ========================================= */
+
+/* Color Contrast for Errors (Requirement 2.2) */
+.invalid-feedback {
+    color: #d93025 !important; /* WCAG 2.1 AA compliant red */
+    font-weight: bold;
+    display: block; /* Ensure visibility when JS populates it */
+}
+
+/* Highlight invalid fields */
+.form-control.is-invalid {
+    border: 2px solid #d93025;
+}
+
+/* Touch targets for mobile */
+.form-check-label {
+    padding-left: 10px;
+    min-height: 44px; /* Accessible touch target size */
+    display: flex;
+    align-items: center;
+}
+
+/* 6. FOOTER */
+footer {
+    background-color: #f8f9fa;
+    color: #6c757d;
+    font-size: 0.9rem;
+}
