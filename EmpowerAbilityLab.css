@@ -1,91 +1,64 @@
 /* =========================================
    1. GLOBAL ACCESSIBILITY & BASE STYLES
    ========================================= */
-
-/* CHANGE STARTING HERE: */
 html, body {
-    height: 100%; /* Line 1: Tells the browser the page is 100% of the window */
-    margin: 0;    /* Line 2: Removes default browser gaps */
+    height: 100%;
+    margin: 0;
 }
 
 body {
-    display: flex;         /* Line 3: Turns the page into a flexbox */
-    flex-direction: column; /* Line 4: Stacks header, main, and footer vertically */
-    min-height: 100vh;      /* Line 5: Ensures the body is at least as tall as the screen */
-    
-    /* Keep your existing body styles below */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
     font-family: Arial, Helvetica, sans-serif;
     line-height: 1.6;
     color: #212529;
-    
 }
 
-/* Add this to your main tag style as well */
 main {
-    flex: 1 0 auto; /* This line "pushes" the footer to the very bottom */
-}
-.navbar.bg-dark {
-    background-color: #d4d4d4 !important;
-    border-bottom: 1px solid #8c8a86;
+    flex: 1 0 auto;
 }
 
 /* =========================================
    2. HEADER & NAVIGATION
    ========================================= */
-
-/* Change the background to light gray to make the black logo text pop */
-
 .navbar.bg-dark {
     background-color: #d4d4d4 !important;
     border-bottom: 1px solid #8c8a86;
+    z-index: 1050 !important; /* Ensures menu stays on top for focus */
 }
 
-/* Make standard links dark so they show up on light gray */
+/* Base Link Style */
 .nav-link {
     color: #333333 !important;
+    transition: all 0.2s ease-in-out;
+}
+
+/* ⌨️ KEYBOARD ACCESSIBILITY: Visible Focus Indicator */
+/* This makes the menu links 'pop' when you tab through them */
+.nav-link:focus, 
+.navbar-brand:focus {
+    outline: 3px solid #d39a0a !important; 
+    outline-offset: 2px;
+    background-color: rgba(211, 154, 10, 0.1);
+    border-radius: 4px;
 }
 
 /* This targets the 'Home' link when it is selected */
 .nav-link[aria-current="page"] {
-    color: #d39a0a !important;        /* Darker gold for light background */
+    color: #d39a0a !important;
     font-weight: bold;
     border-bottom: 3px solid #d89d08 !important; 
     padding-bottom: 5px;
 }
-/* =========================================
-   2. HOME PAGE - JUMTRON STYLING
-   ========================================= */
 
-.jumbotron {
-    /* This centers the text and the content inside the box */
-    text-align: center;
-    
-    /* These lines center the 'box' itself if it has a width */
-    display: flex;
-    flex-direction: column;
-    align-items: center; 
-
-    /* Keep it flush with the navbar */
-    margin-top: 0 !important;
-    padding: 4rem 2rem;
-    background-color: #f8f9fa;
-}
-.jumbotron h1 {
-    margin-bottom: 2.5rem !important; 
-}
-.jumbotron p {
-    /* This limits the width so the lines aren't too long to read */
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 1.5rem;
-}
-.jumbotron .btn {
-    margin-top: 2rem !important;
+/* Hover effect for mouse users */
+.nav-link:hover {
+    color: #d39a0a !important;
 }
 
 /* =========================================
-   3. TABLET & DESKTOP SIZE (3 Columns, 2 Rows)
+   3. HOME PAGE - TABLET & DESKTOP (Merged Row Look)
    ========================================= */
 @media (min-width: 576px) {
     .table {
@@ -93,42 +66,71 @@ main {
         width: 100%;
         border-collapse: collapse;
         border: 1px solid #dee2e6;
-        table-layout: fixed; /* Ensures 3 equal columns */
+        table-layout: fixed;
     }
 
-    /* First Row (Header) Styling */
     .table thead th {
-        background-color: #343a40 !important; /* Specific dark gray requested */
-        color: #ffffff !important;           /* Pure white text */
+        background-color: #343a40 !important;
+        color: #ffffff !important;
         text-align: center;
         padding: 15px;
         font-weight: normal;
-        border: 1px solid #454d55 !important; /* Slightly lighter border for header cells */
+        border: 1px solid #454d55 !important;
         font-size: 1.1rem;
     }
 
-    /* All Body Cells (Rows below the header) */
-    .table td {
-        background-color: #ffffff !important; /* Clean white background */
-        padding: 1.5rem !important;
-        border: 1px solid #dee2e6 !important;
+    /* Top half: The Content paragraphs */
+    .table tbody tr:first-child td {
+        background-color: #ffffff !important;
+        padding: 1.5rem 1.5rem 0.5rem 1.5rem !important;
+        border-left: 1px solid #dee2e6 !important;
+        border-right: 1px solid #dee2e6 !important;
+        border-bottom: none !important; /* REMOVES THE MIDDLE LINE */
         vertical-align: top;
-        color: #212529;
     }
 
-    /* Bold the first column text for better visual structure */
-    .table tbody td:first-child {
-        font-weight: normal;
-    }
-
-    /* Center the 'Learn more' links row */
+    /* Bottom half: The 'Learn More' links */
     .table tbody tr:last-child td {
+        background-color: #ffffff !important;
         text-align: center;
-        padding: 1rem !important;
+        padding: 0 1.5rem 1.5rem 1.5rem !important;
+        border-left: 1px solid #dee2e6 !important;
+        border-right: 1px solid #dee2e6 !important;
+        border-top: none !important; /* REMOVES THE MIDDLE LINE */
     }
 }
 
-/* --- MOBILE SIZE (With Text Padding) --- */
+/* =========================================
+   4. HOME PAGE - JUMBOTRON
+   ========================================= */
+.jumbotron {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    margin-top: 0 !important;
+    padding: 4rem 2rem;
+    background-color: #f8f9fa;
+}
+
+.jumbotron h1 {
+    margin-bottom: 2.5rem !important; 
+}
+
+.jumbotron p {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1.5rem;
+}
+
+.jumbotron .btn {
+    margin-top: 2rem !important;
+}
+
+/* =========================================
+   5. MOBILE SIZE (Home Page Cards)
+   ========================================= */
 @media (max-width: 575.98px) {
     .table thead {
         display: none !important;
@@ -149,7 +151,7 @@ main {
     .table td {
         display: block !important;
         width: 100% !important;
-        padding: 50 !important; /* Bottom padding for the whole box */
+        padding: 0 0 1.5rem 0 !important;
         margin-bottom: 2rem;
         background-color: #fff !important;
         border: 1px solid #dee2e6 !important;
@@ -157,8 +159,6 @@ main {
         overflow: hidden; 
     }
 
-    /* Target the text and the 'Learn More' link to add side padding */
-    /* This ensures the text has space on the left and right */
     .table td > p, 
     .table td > ul,
     .table td::after {
@@ -166,7 +166,6 @@ main {
         padding-right: 1.5rem !important;
     }
 
-    /* The Header Style */
     .table td::before {
         display: block;
         background-color: #343a40; 
@@ -178,12 +177,10 @@ main {
         width: 100%;
     }
 
-    /* Assign the specific text */
     .table td:nth-child(1)::before { content: "Our Approach"; }
     .table td:nth-child(2)::before { content: "Services"; }
     .table td:nth-child(3)::before { content: "Testimonials"; }
 
-    /* Fake Learn More link style with padding */
     .table td::after {
         content: "Learn more";
         display: block;
@@ -193,89 +190,57 @@ main {
         font-weight: 500;
     }
 }
-/* =========================================
-   4. INTERACTIVE COMPONENTS (REQUIREMENT 4)
-   ========================================= */
-
-/* Section Toggling Logic */
-section[hidden] {
-    display: none !important;
-}
-
-/* Custom Modal/Lightbox Design (No Bootstrap JS used) */
-.modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.85); /* Darken background for focus */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 2000;
-}
-
-.modal[hidden] {
-    display: none !important;
-}
-
-.modal-content {
-    background: #fff;
-    border-radius: 8px;
-    padding: 20px;
-    max-width: 500px;
-    width: 90%;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-}
-
-/* Switch Component Styling */
-#email-updates-switch {
-    border: none;
-    background: transparent;
-    cursor: pointer;
-    padding: 0;
-}
-
-#email-updates-switch:hover {
-    opacity: 0.7;
-}
 
 /* =========================================
-   5. WEB FORM & VALIDATION (REQUIREMENT 5)
+   6. MOBILE NAVIGATION (Hamburger)
    ========================================= */
+@media (max-width: 767.98px) {
+    body {
+        padding-top: 80px !important;
+    }
 
-/* Color Contrast for Errors (Requirement 2.2) */
-.invalid-feedback {
-    color: #d93025 !important; /* WCAG 2.1 AA compliant red */
-    font-weight: bold;
-    display: block; /* Ensure visibility when JS populates it */
-}
+    .navbar-collapse.collapse {
+        display: none !important;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background-color: #d4d4d4;
+        border-bottom: 2px solid #8c8a86;
+        padding: 1rem 0;
+        z-index: 1000;
+    }
 
-/* Highlight invalid fields */
-.form-control.is-invalid {
-    border: 2px solid #d93025;
-}
+    .navbar::after {
+        content: "☰";
+        font-size: 30px;
+        color: #333;
+        position: absolute;
+        right: 20px;
+        top: 10px;
+        cursor: pointer;
+    }
 
-/* Touch targets for mobile */
-.form-check-label {
-    padding-left: 10px;
-    min-height: 44px; /* Accessible touch target size */
-    display: flex;
-    align-items: center;
-}
+    .navbar:hover .navbar-collapse.collapse,
+    .navbar:focus-within .navbar-collapse.collapse {
+        display: block !important;
+    }
 
-/* 6. FOOTER */
-footer {
-    background-color: #d4d4d4;
-    color: #050505;
-    font-size: 0.9rem;
+    .navbar-nav {
+        flex-direction: column !important;
+        text-align: center;
+        width: 100%;
+    }
+
+    .nav-item {
+        padding: 15px 0;
+        border-top: 1px solid rgba(0,0,0,0.05);
+    }
 }
 
 /* =========================================
    7. SERVICES PAGE STYLING
    ========================================= */
-
 #services-view h1 {
     margin-bottom: 1.5rem;
     font-weight: bold;
@@ -293,16 +258,14 @@ footer {
     line-height: 1.8;
 }
 
-/* Styling the image to match the mock-up */
 .services-image {
-    max-width: 250px; /* Adjust size to match the small box in the sketch */
+    max-width: 250px;
     margin-top: 50px;
-    border: 1px solid #ddd; /* Adds that slight box look from the sketch */
+    border: 1px solid #ddd;
     padding: 10px;
     background-color: #fff;
 }
 
-/* For larger screens, push the image to the right like the template */
 @media (min-width: 768px) {
     #services-view .img-fluid {
         float: right;
@@ -311,131 +274,58 @@ footer {
     }
 }
 
-/* =========================================
-   8. SCHEDULE A CALL - LAYOUT FIX
-   ========================================= */
+@media (max-width: 575.98px) {
+    #services-view h1 { text-align: center; }
+    #services-view .img-fluid {
+        display: block !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        float: none !important;
+        max-width: 180px;
+    }
+    #services-view .container {
+        padding-left: 2rem !important;
+        padding-right: 2rem !important;
+    }
+}
 
-/* This container holds the image and the text */
+/* =========================================
+   8. SCHEDULE A CALL LAYOUT
+   ========================================= */
 #schedule-view .container {
     max-width: 900px;
     margin-left: auto;
     margin-right: auto;
-    padding-top: 2rem;
+    padding-top: 4rem !important;    /* UPDATED: Added more top room */
+    padding-bottom: 4rem !important; /* UPDATED: Added more bottom room */
 }
 
-/* Position the image at the top-left */
 #schedule-view img.img-fluid {
     display: block;
-    float: left;        /* Pushes image to the left */
-    max-width: 150px;   /* Makes the image smaller like the sketch */
-    margin-right: 2rem; /* Adds space between image and the title */
+    float: left;
+    max-width: 150px;
+    margin-right: 2rem;
     margin-bottom: 1rem;
 }
 
-/* Clear the float so the form starts below the image */
+/* NEW: Pushes the form down away from the text */
+#schedule-view p:last-of-type {
+    margin-bottom: 3rem !important; 
+}
+
 #schedule-heading {
-    text-align: left;   /* Align title to the left near the image */
-    margin-top: 10px;
-    clear: none;        /* Allows text to wrap beside the image */
+    text-align: left;
+    margin-top: 20px;
+    margin-bottom: 1.5rem; /* Added space under the title */
+    clear: none;
 }
 
 #schedule-form {
-    clear: both;        /* Ensures the form starts AFTER the image/title block */
-    padding-top: 2rem;
+    clear: both;
+    padding-top: 1rem;
 }
-
-/* =========================================
-   9. MOBILE NAVIGATION (Hamburger Style)
-   ========================================= */
-@media (max-width: 767.98px) {
-    /* 1. Reset the body padding since the menu is now small */
-    body {
-        padding-top: 80px !important;
-    }
-
-    /* 2. Hide the links by default */
-    .navbar-collapse.collapse {
-        display: none !important;
-        position: absolute;
-        top: 60px;
-        left: 0;
-        width: 100%;
-        background-color: #d4d4d4;
-        border-bottom: 2px solid #8c8a86;
-        padding: 1rem 0;
-        z-index: 1000;
-    }
-
-    /* 3. Create the Hamburger Icon using CSS on the Navbar Brand area */
-    .navbar::after {
-        content: "☰"; /* The Hamburger Symbol */
-        font-size: 30px;
-        color: #333;
-        position: absolute;
-        right: 20px;
-        top: 10px;
-        cursor: pointer;
-    }
-
-    /* 4. THE TRICK: Show the menu when the user interacts with the navbar */
-    /* This uses :focus-within so it stays open when a link is clicked/tabbed */
-    .navbar:hover .navbar-collapse.collapse,
-    .navbar:focus-within .navbar-collapse.collapse {
-        display: block !important;
-    }
-
-    /* 5. Stack the links vertically inside the "opened" menu */
-    .navbar-nav {
-        flex-direction: column !important;
-        text-align: center;
-        width: 100%;
-    }
-
-    .nav-item {
-        padding: 15px 0;
-        border-top: 1px solid rgba(0,0,0,0.05);
-    }
-}
-/* --- MOBILE SERVICES CENTERING --- */
 @media (max-width: 575.98px) {
-    /* Centers the 'Services' H1 title */
-    #services-view h1 {
-        text-align: center;
-        width: 100%;
-    }
-
-    /* Centers the emoji image on mobile */
-    #services-view .img-fluid, 
-    #services-view .services-image {
-        display: block !important;
-        margin-left: auto !important;
-        margin-right: auto !important;
-        float: none !important; /* This cancels the desktop 'float: right' */
-        max-width: 180px;        /* Slightly smaller for phone screens */
-    }
-
-    /* Optional: Center the intro paragraph below the image too */
-    #services-view p:first-of-type {
-        text-align: center;
-    }
-    #services-view .container {
-    padding-left: 2rem !important;
-    padding-right: 2rem !important;
-}
-
-    #services-view h2 {
-        text-align: left; /* Keeps subheaders aligned with the padded text */
-        margin-top: 2.5rem;
-    }
-
-    #services-view p {
-        margin-bottom: 1.5rem;
-    }
-}
-
-/* --- MOBILE SCHEDULE A CALL FIX --- */
-@media (max-width: 575.98px) {
-    /* 1. Stack the image on top and center it */
+    /* 1. Force the image to the top and center it */
     #schedule-view img.img-fluid {
         float: none !important;
         display: block !important;
@@ -443,53 +333,85 @@ footer {
         max-width: 150px;
     }
 
-    /* 2. Center the title and intro text */
+    /* 2. Stack the title and center it */
     #schedule-heading {
-        text-align: center;
+        text-align: center !important;
         width: 100%;
-        margin-bottom: 1rem;
+        margin-top: 0 !important;
+        margin-bottom: 1rem !important;
     }
 
-    /* 3. Add padding to the paragraphs so they don't touch the screen edges */
+    /* 3. Center the paragraphs and add side padding */
     #schedule-view p {
-        text-align: center;
-        padding: 0 1.5rem;
+        text-align: center !important;
+        padding: 0 1.5rem !important;
+        margin-bottom: 1.5rem !important;
     }
 
-    /* 4. Ensure the form is centered below the text */
-    #schedule-form {
-        padding: 1.5rem;
+    /* 4. Ensure the container has room at the top of the phone screen */
+    #schedule-view .container {
+        padding-top: 2rem !important;
     }
 }
-    /* 5. FINAL: Force Checkbox and Text Alignment */
-    #schedule-view .form-check {
-        display: flex !important;
-        flex-direction: row !important;
-        align-items: center !important; /* Vertically centers box with the first line */
-        padding-left: 0 !important; 
-        margin-bottom: 1.5rem !important;
-        position: relative;
-    }
+/* =========================================
+   9. WEB FORM & ACCESSIBILITY (Checkboxes)
+   ========================================= */
+.invalid-feedback {
+    color: #d93025 !important;
+    font-weight: bold;
+}
 
-    #schedule-view .form-check-input {
-        /* This kills Bootstrap's absolute positioning */
-        position: static !important; 
-        
-        /* Forces the size and prevents drifting */
-        width: 20px !important;
-        height: 20px !important;
-        margin: 0 15px 0 0 !important; /* Top, Right (Gap), Bottom, Left */
-        
-        cursor: pointer;
-        flex-shrink: 0 !important;
-    }
+.form-control.is-invalid {
+    border: 2px solid #d93025;
+}
 
-    #schedule-view .form-check-label {
-        /* Removes Bootstrap's default indent since we used margin on the box */
-        padding-left: 0 !important; 
-        margin-bottom: 0 !important;
-        font-size: 1rem;
-        line-height: 1.2;
-        text-align: left !important;
-        cursor: pointer;
-    }
+#schedule-view .form-check {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    padding-left: 0 !important; 
+    margin-bottom: 1.5rem !important;
+}
+
+#schedule-view .form-check-input {
+    position: static !important; 
+    width: 20px !important;
+    height: 20px !important;
+    margin: 0 15px 0 0 !important;
+    flex-shrink: 0 !important;
+}
+
+#schedule-view .form-check-label {
+    padding-left: 0 !important; 
+    text-align: left !important;
+}
+
+
+/* =========================================
+   10. MODAL & FOOTER
+   ========================================= */
+.modal {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    display: flex;
+    align-items: center; justify-content: center;
+    z-index: 2000;
+}
+
+.modal-content {
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 500px; width: 90%;
+}
+
+
+
+footer {
+    background-color: #d4d4d4;
+    color: #050505;
+    padding: 2rem 0;
+    text-align: center;
+}
