@@ -128,13 +128,69 @@ main {
     }
 }
 
-/* --- MOBILE SIZE (Stay Stacked) --- */
+/* --- MOBILE SIZE (With Text Padding) --- */
 @media (max-width: 575.98px) {
-    .table, .table tbody, .table tr, .table td {
+    .table thead {
+        display: none !important;
+    }
+
+    .table, .table tbody {
+        display: block !important;
+    }
+
+    .table tr:last-child {
+        display: none !important;
+    }
+
+    .table tr:first-child {
+        display: block !important;
+    }
+
+    .table td {
         display: block !important;
         width: 100% !important;
+        padding: 50 !important; /* Bottom padding for the whole box */
+        margin-bottom: 2rem;
+        background-color: #fff !important;
         border: 1px solid #dee2e6 !important;
-        margin-bottom: 5px;
+        border-radius: 8px;
+        overflow: hidden; 
+    }
+
+    /* Target the text and the 'Learn More' link to add side padding */
+    /* This ensures the text has space on the left and right */
+    .table td > p, 
+    .table td > ul,
+    .table td::after {
+        padding-left: 1.5rem !important;
+        padding-right: 1.5rem !important;
+    }
+
+    /* The Header Style */
+    .table td::before {
+        display: block;
+        background-color: #343a40; 
+        color: #ffffff;            
+        text-align: center;
+        padding: 12px 0;
+        font-weight: bold;
+        margin-bottom: 1.5rem;    
+        width: 100%;
+    }
+
+    /* Assign the specific text */
+    .table td:nth-child(1)::before { content: "Our Approach"; }
+    .table td:nth-child(2)::before { content: "Services"; }
+    .table td:nth-child(3)::before { content: "Testimonials"; }
+
+    /* Fake Learn More link style with padding */
+    .table td::after {
+        content: "Learn more";
+        display: block;
+        margin-top: 1rem;
+        color: #007bff;
+        text-decoration: underline;
+        font-weight: 500;
     }
 }
 /* =========================================
@@ -287,3 +343,153 @@ footer {
     clear: both;        /* Ensures the form starts AFTER the image/title block */
     padding-top: 2rem;
 }
+
+/* =========================================
+   9. MOBILE NAVIGATION (Hamburger Style)
+   ========================================= */
+@media (max-width: 767.98px) {
+    /* 1. Reset the body padding since the menu is now small */
+    body {
+        padding-top: 80px !important;
+    }
+
+    /* 2. Hide the links by default */
+    .navbar-collapse.collapse {
+        display: none !important;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background-color: #d4d4d4;
+        border-bottom: 2px solid #8c8a86;
+        padding: 1rem 0;
+        z-index: 1000;
+    }
+
+    /* 3. Create the Hamburger Icon using CSS on the Navbar Brand area */
+    .navbar::after {
+        content: "☰"; /* The Hamburger Symbol */
+        font-size: 30px;
+        color: #333;
+        position: absolute;
+        right: 20px;
+        top: 10px;
+        cursor: pointer;
+    }
+
+    /* 4. THE TRICK: Show the menu when the user interacts with the navbar */
+    /* This uses :focus-within so it stays open when a link is clicked/tabbed */
+    .navbar:hover .navbar-collapse.collapse,
+    .navbar:focus-within .navbar-collapse.collapse {
+        display: block !important;
+    }
+
+    /* 5. Stack the links vertically inside the "opened" menu */
+    .navbar-nav {
+        flex-direction: column !important;
+        text-align: center;
+        width: 100%;
+    }
+
+    .nav-item {
+        padding: 15px 0;
+        border-top: 1px solid rgba(0,0,0,0.05);
+    }
+}
+/* --- MOBILE SERVICES CENTERING --- */
+@media (max-width: 575.98px) {
+    /* Centers the 'Services' H1 title */
+    #services-view h1 {
+        text-align: center;
+        width: 100%;
+    }
+
+    /* Centers the emoji image on mobile */
+    #services-view .img-fluid, 
+    #services-view .services-image {
+        display: block !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        float: none !important; /* This cancels the desktop 'float: right' */
+        max-width: 180px;        /* Slightly smaller for phone screens */
+    }
+
+    /* Optional: Center the intro paragraph below the image too */
+    #services-view p:first-of-type {
+        text-align: center;
+    }
+    #services-view .container {
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+}
+
+    #services-view h2 {
+        text-align: left; /* Keeps subheaders aligned with the padded text */
+        margin-top: 2.5rem;
+    }
+
+    #services-view p {
+        margin-bottom: 1.5rem;
+    }
+}
+
+/* --- MOBILE SCHEDULE A CALL FIX --- */
+@media (max-width: 575.98px) {
+    /* 1. Stack the image on top and center it */
+    #schedule-view img.img-fluid {
+        float: none !important;
+        display: block !important;
+        margin: 0 auto 1.5rem auto !important; /* Centers image and adds space below */
+        max-width: 150px;
+    }
+
+    /* 2. Center the title and intro text */
+    #schedule-heading {
+        text-align: center;
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+
+    /* 3. Add padding to the paragraphs so they don't touch the screen edges */
+    #schedule-view p {
+        text-align: center;
+        padding: 0 1.5rem;
+    }
+
+    /* 4. Ensure the form is centered below the text */
+    #schedule-form {
+        padding: 1.5rem;
+    }
+}
+    /* 5. FINAL: Force Checkbox and Text Alignment */
+    #schedule-view .form-check {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important; /* Vertically centers box with the first line */
+        padding-left: 0 !important; 
+        margin-bottom: 1.5rem !important;
+        position: relative;
+    }
+
+    #schedule-view .form-check-input {
+        /* This kills Bootstrap's absolute positioning */
+        position: static !important; 
+        
+        /* Forces the size and prevents drifting */
+        width: 20px !important;
+        height: 20px !important;
+        margin: 0 15px 0 0 !important; /* Top, Right (Gap), Bottom, Left */
+        
+        cursor: pointer;
+        flex-shrink: 0 !important;
+    }
+
+    #schedule-view .form-check-label {
+        /* Removes Bootstrap's default indent since we used margin on the box */
+        padding-left: 0 !important; 
+        margin-bottom: 0 !important;
+        font-size: 1rem;
+        line-height: 1.2;
+        text-align: left !important;
+        cursor: pointer;
+    }
