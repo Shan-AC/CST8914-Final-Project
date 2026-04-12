@@ -199,16 +199,13 @@ function knowledgeRunner() {
         switchImg.src = newState
             ? "images/switch-on.png"
             : "images/switch-off.png";
+
+        switchImg.alt = newState
+            ? "Email updates switch is on"
+            : "Email updates switch is off";
     }
 
     emailUpdatesSwitch.addEventListener("click", toggleSwitch);
-
-    emailUpdatesSwitch.addEventListener("keydown", function (event) {
-        if (event.key === " " || event.key === "Enter") {
-            event.preventDefault();
-            toggleSwitch();
-        }
-    });
 
 
     function clearErrors() {
