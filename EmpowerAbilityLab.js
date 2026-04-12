@@ -130,9 +130,11 @@ function knowledgeRunner() {
     // Opens the modal and moves focus into it
     function openModal() {
         lastFocusedElement = document.activeElement;
+
         modal.hidden = false;
-        document.body.classList.add("modal-open");
+        modal.classList.add("show");
         openModalBtn.setAttribute("aria-expanded", "true");
+        document.body.classList.add("modal-open");
 
         const focusableElements = getFocusableElements(modal);
         if (focusableElements.length > 0) {
@@ -143,8 +145,9 @@ function knowledgeRunner() {
     // Closes the modal and returns focus to the opener
     function closeModal() {
         modal.hidden = true;
-        document.body.classList.remove("modal-open");
+        modal.classList.remove("show");
         openModalBtn.setAttribute("aria-expanded", "false");
+        document.body.classList.remove("modal-open");
 
         if (lastFocusedElement) {
             lastFocusedElement.focus();
@@ -355,14 +358,14 @@ function knowledgeRunner() {
     document.addEventListener("click", (event) => {
         handleNavActivation(event);
 
-        if (event.target === openModalBtn) {
+        if (event.target.closest("#open-modal-btn")) {
             openModal();
             return;
         }
 
         if (
-            event.target === closeModalBtn ||
-            event.target === closeModalFooterBtn ||
+            event.target.closest("#close-modal-btn") ||
+            event.target.closest("#close-modal-footer-btn") ||
             event.target === modal
         ) {
             closeModal();
