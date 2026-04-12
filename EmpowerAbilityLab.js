@@ -8,6 +8,7 @@
 // 6. Accessible form validation and user notifications
 
 function knowledgeRunner() {
+    // Map each SPA view to its section, nav link, page title, and focus target
     const viewConfig = {
         "#home-view": {
             section: document.getElementById("home-view"),
@@ -31,18 +32,22 @@ function knowledgeRunner() {
 
     const mainContent = document.getElementById("main-content");
 
+    // Modal elements
     const modal = document.getElementById("community-modal");
     const openModalBtn = document.getElementById("open-modal-btn");
     const closeModalBtn = document.getElementById("close-modal-btn");
     const closeModalFooterBtn = document.getElementById("close-modal-footer-btn");
 
+    // Conditional event details field
     const speakerCheckbox = document.getElementById("topic-speaker");
     const eventDetailsSection = document.getElementById("event-details-section");
     const eventDetailsField = document.getElementById("event-details");
 
+    // Switch control elements
     const emailUpdatesSwitch = document.getElementById("email-updates-switch");
     const switchImg = document.getElementById("switch-img");
 
+    // Form and validation elements
     const form = document.getElementById("schedule-form");
     const formAnnouncements = document.getElementById("form-announcements");
     const businessName = document.getElementById("business-name");
@@ -53,12 +58,15 @@ function knowledgeRunner() {
     const phoneError = document.getElementById("phone-error");
     const emailError = document.getElementById("email-error");
 
+    // Used to return focus to the element that opened the modal
     let lastFocusedElement = null;
 
+    // Returns the current valid hash, or defaults to Home
     function getCurrentHash() {
         return viewConfig[window.location.hash] ? window.location.hash : "#home-view";
     }
 
+    // Updates the active nav item for the visible view
     function updateNavState(activeHash) {
         Object.entries(viewConfig).forEach(([hash, config]) => {
             const isActive = hash === activeHash;
@@ -67,6 +75,7 @@ function knowledgeRunner() {
         });
     }
 
+    // Shows one SPA view, hides the others, updates title, history, and focus
     function showView(hash, options = {}) {
         const { updateHistory = true, moveFocus = true } = options;
         const targetHash = viewConfig[hash] ? hash : "#home-view";
@@ -78,10 +87,12 @@ function knowledgeRunner() {
         updateNavState(targetHash);
         document.title = viewConfig[targetHash].title;
 
+        // Keep browser history in sync with SPA navigation
         if (updateHistory && window.location.hash !== targetHash) {
             history.pushState({ view: targetHash }, "", targetHash);
         }
 
+        // Move focus to the main heading of the newly displayed view
         if (moveFocus) {
             const focusTarget = viewConfig[targetHash].focusTarget || mainContent;
             focusTarget.setAttribute("tabindex", "-1");
@@ -89,6 +100,7 @@ function knowledgeRunner() {
         }
     }
 
+    // Handles clicks on internal SPA nav links
     function handleNavActivation(event) {
         const link = event.target.closest('a[href^="#"]');
         if (!link) return;
@@ -100,6 +112,7 @@ function knowledgeRunner() {
         showView(hash, { updateHistory: true, moveFocus: true });
     }
 
+    // Returns visible, focusable elements inside a container
     function getFocusableElements(container) {
         const selectors = [
             'a[href]',
@@ -114,6 +127,7 @@ function knowledgeRunner() {
             .filter((element) => !element.hidden && element.offsetParent !== null);
     }
 
+    // Opens the modal and moves focus into it
     function openModal() {
         lastFocusedElement = document.activeElement;
         modal.hidden = false;
@@ -126,6 +140,7 @@ function knowledgeRunner() {
         }
     }
 
+    // Closes the modal and returns focus to the opener
     function closeModal() {
         modal.hidden = true;
         document.body.classList.remove("modal-open");
@@ -138,6 +153,7 @@ function knowledgeRunner() {
         }
     }
 
+    // Keeps keyboard focus trapped inside the modal while it is open
     function trapFocusInModal(event) {
         if (modal.hidden || event.key !== "Tab") return;
 
@@ -156,6 +172,7 @@ function knowledgeRunner() {
         }
     }
 
+    // Handles global keyboard behavior for the modal
     function handleGlobalKeydown(event) {
         if (!modal.hidden) {
             if (event.key === "Escape") {
@@ -165,16 +182,9 @@ function knowledgeRunner() {
             }
             trapFocusInModal(event);
         }
-
-        if (
-            document.activeElement === emailUpdatesSwitch &&
-            (event.key === " " || event.key === "Enter")
-        ) {
-            event.preventDefault();
-            toggleSwitch();
-        }
     }
 
+    // Shows or hides the event details textarea based on the speaker checkbox
     function syncEventDetailsVisibility(moveFocus = false) {
         const isChecked = speakerCheckbox.checked;
         eventDetailsSection.hidden = !isChecked;
@@ -191,6 +201,7 @@ function knowledgeRunner() {
         }
     }
 
+    // Toggles the custom switch state and updates its image and alt text
     function toggleSwitch() {
         const isOn = emailUpdatesSwitch.getAttribute("aria-checked") === "true";
         const newState = !isOn;
@@ -205,9 +216,10 @@ function knowledgeRunner() {
             : "Email updates switch is off";
     }
 
+    // A real button already supports mouse, Enter, and Space through click
     emailUpdatesSwitch.addEventListener("click", toggleSwitch);
 
-
+    // Removes previous validation styling and messages
     function clearErrors() {
         [businessName, phoneNumber, emailAddress, eventDetailsField].forEach((field) => {
             field.classList.remove("is-invalid");
@@ -224,6 +236,7 @@ function knowledgeRunner() {
         }
     }
 
+    // Applies an error style and message to a specific field
     function showFieldError(field, errorElement, message) {
         field.classList.add("is-invalid");
         field.setAttribute("aria-invalid", "true");
@@ -232,6 +245,7 @@ function knowledgeRunner() {
         }
     }
 
+    // Announces a success or error summary to the user
     function showFormAnnouncement(message, isSuccess) {
         formAnnouncements.textContent = message;
         formAnnouncements.classList.remove("d-none", "alert-success", "alert-danger");
@@ -239,6 +253,7 @@ function knowledgeRunner() {
         formAnnouncements.focus();
     }
 
+    // Validates required fields and field formats
     function validateForm() {
         clearErrors();
 
@@ -279,6 +294,7 @@ function knowledgeRunner() {
             firstInvalidField ??= emailAddress;
         }
 
+        // Event details become required only when the speaker option is checked
         if (speakerCheckbox.checked && eventDetailsValue === "") {
             let eventDetailsError = document.getElementById("event-details-error");
             if (!eventDetailsError) {
@@ -298,6 +314,7 @@ function knowledgeRunner() {
         return { isValid, firstInvalidField };
     }
 
+    // Handles form submission, displays either errors or a success message
     function handleFormSubmit(event) {
         event.preventDefault();
 
@@ -323,6 +340,7 @@ function knowledgeRunner() {
             true
         );
 
+        // Reset the form and restore the switch to its default off state
         form.reset();
         emailUpdatesSwitch.setAttribute("aria-checked", "false");
         if (switchImg) {
@@ -333,6 +351,7 @@ function knowledgeRunner() {
         clearErrors();
     }
 
+    // Central click handling for SPA links and modal actions
     document.addEventListener("click", (event) => {
         handleNavActivation(event);
 
@@ -349,22 +368,21 @@ function knowledgeRunner() {
             closeModal();
             return;
         }
-
-        if (event.target === emailUpdatesSwitch) {
-            toggleSwitch();
-        }
     });
 
+    // Keep SPA views in sync with browser back/forward actions
     window.addEventListener("popstate", () => {
         showView(getCurrentHash(), { updateHistory: false, moveFocus: true });
     });
 
     document.addEventListener("keydown", handleGlobalKeydown);
 
+    // Show or hide the event details field when the checkbox changes
     speakerCheckbox.addEventListener("change", () => {
         syncEventDetailsVisibility(true);
     });
 
+    // Make the announcement region programmatically focusable
     formAnnouncements.setAttribute("tabindex", "-1");
     form.addEventListener("submit", handleFormSubmit);
 
