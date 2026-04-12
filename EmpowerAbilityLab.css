@@ -3,62 +3,82 @@
    ========================================= */
 html, body {
     height: 100%;
-    margin: 0;
+    margin: 0 !important;
+    padding: 0 !important;
+    /* This ensures the browser starts drawing at the very first pixel */
+    display: block !important; 
 }
 
 body {
-    display: flex;
-    flex-direction: column;
     min-height: 100vh;
     font-family: Arial, Helvetica, sans-serif;
-    line-height: 1.6;
     color: #212529;
-}
-
-main {
-    flex: 1 0 auto;
+    /* Force the content to start exactly where the navbar ends */
+    padding-top: 56px !important; 
 }
 
 /* =========================================
    2. HEADER & NAVIGATION
    ========================================= */
+header, .navbar {
+    position: fixed !important;
+    top: 0 !important; /* Forces the navbar to the very top edge */
+    left: 0;
+    right: 0;
+    width: 100%;
+    margin: 0 !important;
+    z-index: 2000 !important;
+}
+
 .navbar.bg-dark {
     background-color: #d4d4d4 !important;
     border-bottom: 1px solid #8c8a86;
-    z-index: 1050 !important; /* Ensures menu stays on top for focus */
 }
 
-/* Base Link Style */
+/* Fix for any element inside sections that might have a top margin */
+section :first-child {
+    margin-top: 0 !important;
+}
+
+/* =========================================
+   2. HEADER & NAVIGATION
+   ========================================= */
+header, .navbar {
+    position: relative;
+    z-index: 2000 !important; 
+}
+
+.navbar.bg-dark {
+    background-color: #d4d4d4 !important;
+    border-bottom: 1px solid #8c8a86;
+}
+
 .nav-link {
     color: #333333 !important;
     transition: all 0.2s ease-in-out;
 }
 
-/* ⌨️ KEYBOARD ACCESSIBILITY: Visible Focus Indicator */
-/* This makes the menu links 'pop' when you tab through them */
 .nav-link:focus, 
 .navbar-brand:focus {
-    outline: 3px solid #d39a0a !important; 
+    outline: 3px solid #100c03 !important; 
     outline-offset: 2px;
-    background-color: rgba(211, 154, 10, 0.1);
+    background-color: rgba(16, 12, 3, 0.1);
     border-radius: 4px;
 }
 
-/* This targets the 'Home' link when it is selected */
 .nav-link[aria-current="page"] {
-    color: #d39a0a !important;
+    color: #100c03 !important;
     font-weight: bold;
-    border-bottom: 3px solid #d89d08 !important; 
+    border-bottom: 3px solid #100c03 !important; 
     padding-bottom: 5px;
 }
 
-/* Hover effect for mouse users */
 .nav-link:hover {
-    color: #d39a0a !important;
+    color: #100c03 !important;
 }
 
 /* =========================================
-   3. HOME PAGE - TABLET & DESKTOP (Merged Row Look)
+   3. HOME PAGE - TABLET & DESKTOP (Merged Row)
    ========================================= */
 @media (min-width: 576px) {
     .table {
@@ -74,30 +94,39 @@ main {
         color: #ffffff !important;
         text-align: center;
         padding: 15px;
-        font-weight: normal;
         border: 1px solid #454d55 !important;
-        font-size: 1.1rem;
     }
 
-    /* Top half: The Content paragraphs */
     .table tbody tr:first-child td {
         background-color: #ffffff !important;
         padding: 1.5rem 1.5rem 0.5rem 1.5rem !important;
         border-left: 1px solid #dee2e6 !important;
         border-right: 1px solid #dee2e6 !important;
-        border-bottom: none !important; /* REMOVES THE MIDDLE LINE */
+        border-bottom: none !important;
         vertical-align: top;
     }
 
-    /* Bottom half: The 'Learn More' links */
     .table tbody tr:last-child td {
         background-color: #ffffff !important;
         text-align: center;
         padding: 0 1.5rem 1.5rem 1.5rem !important;
         border-left: 1px solid #dee2e6 !important;
         border-right: 1px solid #dee2e6 !important;
-        border-top: none !important; /* REMOVES THE MIDDLE LINE */
+        border-top: none !important;
     }
+}
+
+/* Accessible Dark Links inside Table */
+.table tbody td a {
+    color: #212529 !important;
+    text-decoration: underline;
+    font-weight: 600;
+}
+
+.table tbody td a:focus {
+    outline: 3px solid #100c03 !important;
+    outline-offset: 4px;
+    background-color: rgba(16, 12, 3, 0.1);
 }
 
 /* =========================================
@@ -108,73 +137,38 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center; 
-    margin-top: 0 !important;
     padding: 4rem 2rem;
     background-color: #f8f9fa;
 }
 
-.jumbotron h1 {
-    margin-bottom: 2.5rem !important; 
-}
-
-.jumbotron p {
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 1.5rem;
-}
-
-.jumbotron .btn {
-    margin-top: 2rem !important;
-}
+.jumbotron h1 { margin-bottom: 2.5rem !important; }
+.jumbotron p { max-width: 800px; margin-bottom: 1.5rem; }
+.jumbotron .btn { margin-top: 2rem !important; }
 
 /* =========================================
-   5. MOBILE SIZE (Home Page Cards)
+   5. MOBILE SIZE (Cards)
    ========================================= */
 @media (max-width: 575.98px) {
-    .table thead {
-        display: none !important;
-    }
-
-    .table, .table tbody {
-        display: block !important;
-    }
-
-    .table tr:last-child {
-        display: none !important;
-    }
-
-    .table tr:first-child {
-        display: block !important;
-    }
+    .table thead, .table tr:last-child { display: none !important; }
+    .table, .table tbody, .table tr:first-child { display: block !important; }
 
     .table td {
         display: block !important;
         width: 100% !important;
         padding: 0 0 1.5rem 0 !important;
         margin-bottom: 2rem;
-        background-color: #fff !important;
         border: 1px solid #dee2e6 !important;
         border-radius: 8px;
         overflow: hidden; 
     }
-
-    .table td > p, 
-    .table td > ul,
-    .table td::after {
-        padding-left: 1.5rem !important;
-        padding-right: 1.5rem !important;
-    }
-
     .table td::before {
         display: block;
         background-color: #343a40; 
-        color: #ffffff;            
+        color: #ffffff;
         text-align: center;
         padding: 12px 0;
         font-weight: bold;
-        margin-bottom: 1.5rem;    
-        width: 100%;
+        margin-bottom: 1.5rem;
     }
 
     .table td:nth-child(1)::before { content: "Our Approach"; }
@@ -188,6 +182,7 @@ main {
         color: #007bff;
         text-decoration: underline;
         font-weight: 500;
+        padding: 0 1.5rem;
     }
 }
 
@@ -195,223 +190,165 @@ main {
    6. MOBILE NAVIGATION (Hamburger)
    ========================================= */
 @media (max-width: 767.98px) {
-    body {
-        padding-top: 80px !important;
-    }
+    body { padding-top: 80px !important; }
 
-    .navbar-collapse.collapse {
-        display: none !important;
+    /* Hide the menu by default */
+    .navbar-collapse {
+        display: none !important; 
         position: absolute;
-        top: 60px;
+        top: 60px; 
         left: 0;
         width: 100%;
         background-color: #d4d4d4;
-        border-bottom: 2px solid #8c8a86;
+        z-index: 2000;
         padding: 1rem 0;
-        z-index: 1000;
+        border-bottom: 2px solid #8c8a86;
     }
 
+    /* The Hamburger Icon */
     .navbar::after {
-        content: "☰";
+        content: "☰"; 
         font-size: 30px;
         color: #333;
-        position: absolute;
-        right: 20px;
+        position: absolute; 
+        right: 20px; 
         top: 10px;
         cursor: pointer;
     }
 
-    .navbar:hover .navbar-collapse.collapse,
-    .navbar:focus-within .navbar-collapse.collapse {
-        display: block !important;
+    /* THE FIX: Show menu on Hover, Focus, OR Click (Active) */
+    .navbar:hover .navbar-collapse,
+    .navbar:focus-within .navbar-collapse,
+    .navbar:active .navbar-collapse { 
+        display: block !important; 
     }
 
+    /* Ensure links inside are stacked and clickable */
     .navbar-nav {
         flex-direction: column !important;
-        text-align: center;
         width: 100%;
+        text-align: center;
     }
 
     .nav-item {
-        padding: 15px 0;
-        border-top: 1px solid rgba(0,0,0,0.05);
+        padding: 10px 0;
     }
 }
 
 /* =========================================
-   7. SERVICES PAGE STYLING
-   ========================================= */
-#services-view h1 {
-    margin-bottom: 1.5rem;
-    font-weight: bold;
-}
-
-#services-view h2 {
-    font-size: 1.5rem;
-    color: #343a40;
-    margin-top: 2rem;
-    margin-bottom: 1rem;
-}
-
-#services-view p {
-    color: #4a4a4a;
-    line-height: 1.8;
-}
-
-.services-image {
-    max-width: 250px;
-    margin-top: 50px;
-    border: 1px solid #ddd;
-    padding: 10px;
-    background-color: #fff;
-}
-
-@media (min-width: 768px) {
-    #services-view .img-fluid {
-        float: right;
-        margin-left: 2rem;
-        margin-bottom: 2rem;
-    }
-}
-
-@media (max-width: 575.98px) {
-    #services-view h1 { text-align: center; }
-    #services-view .img-fluid {
-        display: block !important;
-        margin-left: auto !important;
-        margin-right: auto !important;
-        float: none !important;
-        max-width: 180px;
-    }
-    #services-view .container {
-        padding-left: 2rem !important;
-        padding-right: 2rem !important;
-    }
-}
-
-/* =========================================
-   8. SCHEDULE A CALL LAYOUT
+   7. SCHEDULE A CALL LAYOUT
    ========================================= */
 #schedule-view .container {
-    max-width: 900px;
-    margin-left: auto;
-    margin-right: auto;
-    padding-top: 4rem !important;    /* UPDATED: Added more top room */
-    padding-bottom: 4rem !important; /* UPDATED: Added more bottom room */
+    max-width: 900px; padding-top: 4rem !important; padding-bottom: 4rem !important;
 }
 
 #schedule-view img.img-fluid {
-    display: block;
-    float: left;
-    max-width: 150px;
-    margin-right: 2rem;
-    margin-bottom: 1rem;
+    display: block; float: left; max-width: 150px; margin-right: 2rem;
 }
 
-/* NEW: Pushes the form down away from the text */
-#schedule-view p:last-of-type {
-    margin-bottom: 3rem !important; 
-}
+#schedule-view p:last-of-type { margin-bottom: 3rem !important; }
 
-#schedule-heading {
-    text-align: left;
-    margin-top: 20px;
-    margin-bottom: 1.5rem; /* Added space under the title */
-    clear: none;
-}
+#schedule-heading { text-align: left; margin-top: 20px; margin-bottom: 1.5rem; }
 
-#schedule-form {
-    clear: both;
-    padding-top: 1rem;
-}
+#schedule-form { clear: both; padding-top: 1rem; }
+
 @media (max-width: 575.98px) {
-    /* 1. Force the image to the top and center it */
-    #schedule-view img.img-fluid {
-        float: none !important;
-        display: block !important;
-        margin: 0 auto 1.5rem auto !important; /* Centers image and adds space below */
-        max-width: 150px;
-    }
-
-    /* 2. Stack the title and center it */
-    #schedule-heading {
-        text-align: center !important;
-        width: 100%;
-        margin-top: 0 !important;
-        margin-bottom: 1rem !important;
-    }
-
-    /* 3. Center the paragraphs and add side padding */
-    #schedule-view p {
-        text-align: center !important;
-        padding: 0 1.5rem !important;
-        margin-bottom: 1.5rem !important;
-    }
-
-    /* 4. Ensure the container has room at the top of the phone screen */
-    #schedule-view .container {
-        padding-top: 2rem !important;
-    }
+    #schedule-view img.img-fluid { float: none !important; margin: 0 auto 1.5rem auto !important; }
+    #schedule-heading, #schedule-view p { text-align: center !important; }
 }
+
 /* =========================================
-   9. WEB FORM & ACCESSIBILITY (Checkboxes)
+   8. WEB FORM & SWITCH ACCESSIBILITY
    ========================================= */
-.invalid-feedback {
-    color: #d93025 !important;
-    font-weight: bold;
+.invalid-feedback { color: #d93025 !important; font-weight: bold; }
+.form-control.is-invalid { border: 2px solid #d93025; }
+
+/* ⌨️ KEYBOARD CHECK: Switch Button Focus */
+#email-updates-switch:focus {
+    outline: 3px solid #100c03 !important;
+    outline-offset: 4px;
+    background-color: rgba(16, 12, 3, 0.1);
+    border-radius: 8px;
 }
 
-.form-control.is-invalid {
-    border: 2px solid #d93025;
-}
+/* Business Name Alignment Fix */
+#schedule-form .form-group { text-align: left !important; }
+#schedule-form label { font-weight: bold; display: block; margin-bottom: 8px; }
 
+/* Checkbox Alignment */
 #schedule-view .form-check {
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: center !important;
-    padding-left: 0 !important; 
-    margin-bottom: 1.5rem !important;
+    display: flex !important; align-items: center !important; margin-bottom: 1.5rem !important;
 }
 
 #schedule-view .form-check-input {
-    position: static !important; 
-    width: 20px !important;
-    height: 20px !important;
-    margin: 0 15px 0 0 !important;
-    flex-shrink: 0 !important;
+    position: static !important; width: 20px !important; height: 20px !important;
+    margin: 0 15px 0 0 !important; flex-shrink: 0 !important;
 }
-
-#schedule-view .form-check-label {
-    padding-left: 0 !important; 
-    text-align: left !important;
-}
-
 
 /* =========================================
-   10. MODAL & FOOTER
+   9. MODAL & FOOTER
    ========================================= */
 .modal {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background-color: rgba(0, 0, 0, 0.85);
-    display: flex;
-    align-items: center; justify-content: center;
-    z-index: 2000;
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.85); display: flex;
+    align-items: center; justify-content: center; z-index: 2000;
+}
+.modal-content { background: #fff; border-radius: 8px; padding: 20px; max-width: 500px; }
+footer { background-color: #d4d4d4; color: #050505; padding: 2rem 0; text-align: center; }
+/* Accessible Dark Blue for Primary Buttons */
+.btn-primary {
+    background-color: #0056b3 !important; /* A darker, compliant blue */
+    border-color: #004a9b !important;
+    color: #ffffff !important;
+    padding: 10px 25px !important;
+    font-weight: 600 !important;
 }
 
-.modal-content {
-    background: #fff;
-    border-radius: 8px;
-    padding: 20px;
-    max-width: 500px; width: 90%;
+/* Accessible Hover & Focus States */
+.btn-primary:hover, 
+.btn-primary:focus {
+    background-color: #004085 !important; /* Even darker blue for interaction */
+    border-color: #003366 !important;
+    outline: 3px solid #100c03 !important; /* Your signature focus gold/black */
+    outline-offset: 2px;
 }
 
+/* =========================================
+   MOBILE SERVICES PAGE: Image -> Title -> Text
+   ========================================= */
+@media (max-width: 767.98px) {
+    /* 1. Turn the container into a flex column to reorder items */
+    #services-view .container {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important; /* Centers everything horizontally */
+        padding-left: 1.5rem !important;
+        padding-right: 1.5rem !important;
+    }
 
+    /* 2. Move Image to the top (Order 1) */
+    #services-view .img-fluid {
+        order: 1 !important;
+        display: block !important;
+        float: none !important; /* Kills the desktop float */
+        margin: 0 auto 1.5rem auto !important;
+        max-width: 200px !important;
+    }
 
-footer {
-    background-color: #d4d4d4;
-    color: #050505;
-    padding: 2rem 0;
-    text-align: center;
+    /* 3. Move Title below Image (Order 2) */
+    #services-view h1 {
+        order: 2 !important;
+        text-align: center !important;
+        width: 100%;
+        margin-bottom: 1.5rem !important;
+    }
+
+    /* 4. Paragraphs and Subheadings (Order 3) */
+    #services-view p, 
+    #services-view h2 {
+        order: 3 !important;
+        text-align: center !important;
+        width: 100%;
+        margin-bottom: 1rem !important;
+    }
 }
