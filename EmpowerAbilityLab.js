@@ -282,7 +282,7 @@ function knowledgeRunner() {
             isValid = false;
             firstInvalidField ??= phoneNumber;
         } else if (!phonePattern.test(phoneValue)) {
-            showFieldError(phoneNumber, phoneError, "Enter the phone number in this format: 613-123-1234.");
+            showFieldError(phoneNumber, phoneError, "Enter the phone number in this format: 613 hyphen 123 hyphen 1234.");
             isValid = false;
             firstInvalidField ??= phoneNumber;
         }
