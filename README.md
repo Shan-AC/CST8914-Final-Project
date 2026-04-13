@@ -2,7 +2,7 @@
 # Final Project: Empower Ability Labs SPA- Group 2
 
 ## Live Site
-- https://shan-ac.github.io/CST8914-Final-Project/​
+- Click here : (https://shan-ac.github.io/CST8914-Final-Project/)
 
 ## Project Overview
 This project is an accessible Single-Page Application (SPA) created for the CST8914 final project. It was built using **HTML, CSS, and JavaScript**.
