@@ -472,6 +472,16 @@ body.modal-open {
     overflow: hidden;
 }
 
+#close-modal-footer-btn:focus,
+#close-modal-footer-btn:focus-visible {
+    background-color: #495057 !important;
+    border-color: #3f464c !important;
+    color: #ffffff !important;
+    outline: 3px solid #100c03 !important;
+    outline-offset: 3px;
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.95) !important;
+}
+
 footer {
     background-color: #d4d4d4;
     color: #050505;

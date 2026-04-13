@@ -190,9 +190,12 @@
           </div>
 
           <div class="form-group">
-            <label for="phone-number">Phone number (613-123-1234):</label>
+            <label for="phone-number">Phone number (Example: 613-123-1234):</label>
+            <p id="phone-format-help" class="sr-only">
+              Enter a 10-digit phone number in this format: 613 hyphen 123 hyphen 1234.
+            </p>
             <input type="tel" class="form-control" id="phone-number" name="phone-number"
-              aria-describedby="phone-error" />
+              aria-describedby="phone-format-help phone-error" />
             <div id="phone-error" class="invalid-feedback" aria-live="polite"></div>
           </div>
 
